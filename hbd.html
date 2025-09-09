@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>FOR LOVE OF MY LIFE</title>
+    <style>
+        body {
+            background: radial-gradient(circle at 50% 30%, #fff2f5 0%, #ffe4e1 70%, #ffb6c1 100%);
+            font-family: 'Segoe UI', Arial, sans-serif;
+            text-align: center;
+            padding-top: 50px;
+            overflow-x: hidden;
+        }
+        h2 {
+            color: #ff69b4;
+            font-size: 2em;
+        }
+        #pesan {
+            color: #4a90e2;
+            font-weight: bold;
+            margin-top: 20px;
+            font-size: 1.0em;
+        }
+        input, button {
+            padding: 10px;
+            font-size: 1em;
+            margin: 5px;
+        }
+        button {
+            background: #ff69b4;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background: #ff47d1;
+            color: #fff;
+        }
+        audio {
+            margin-top: 30px;
+        }
+        .fotorow {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 30px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+        .bayangan-masuk {
+            opacity: 0;
+            transform: translateY(60px) scale(0.95);
+            box-shadow: 0 10px 30px rgba(76, 0, 39, 0.18), 0 1.5px 8px rgba(255, 105, 180, 0.17);
+            transition: opacity 0.8s, transform 0.8s, box-shadow 0.8s;
+        }
+        .bayangan-masuk.show {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+            box-shadow: 0 6px 18px rgba(255, 105, 180, 0.25), 0 1px 3px rgba(76, 0, 39, 0.15);
+        }
+        .fotorow img {
+            width: 150px;
+            height: 150px;
+            object-fit: cover;
+            border-radius: 16px;
+            border: 3px solid #ff69b4;
+        }
+        .fotorow img:hover {
+            transform: scale(1.07) rotate(-4deg);
+            box-shadow: 0 8px 24px rgba(76, 0, 39, 0.19);
+        }
+        .bunga {
+            position: fixed;
+            width: 40px;
+            height: 40px;
+            pointer-events: none;
+            z-index: 999;
+            animation: jatuh 3s linear forwards;
+        }
+        @keyframes jatuh {
+            to {
+                transform: translateY(100vh) rotate(360deg);
+                opacity: 0.7;
+            }
+        }
+    </style>
+</head>
+<body>
+    <h2>KETIK "SAYANG" DIBAWAH!</h2>
+    <input type="text" id="nama" placeholder="Masukkan nama">
+    <button onclick="ucapUlangTahun()">Klik Disini</button>
+    <div id="ucapanArea"></div>
+
+    <!-- Audio musik ulang tahun -->
+    <audio id="musik" src="c:\Users\HP\Downloads\Nadin Amizah - Semua Aku Dirayakan (Official Music Video).mp3"></audio>
+
+    <script>
+        function ucapUlangTahun() {
+            var nama = document.getElementById("nama").value;
+            var pesan = "Happy birthday, " + nama + "! Semoga bertambahnya usiamu jadi awal dari banyak hal indah yang akan kamu raih. Kamu itu bukan cuma pacar, tapi juga sahabat, partner, dan orang paling berharga yang aku punya. Aku selalu kagum sama cara kamu berjuang, cara kamu bikin aku ketawa, sampai cara sederhana kamu bikin aku merasa aman dan nyaman. Doaku cuma satu: semoga Tuhan kasih kamu umur yang panjang dan kebahagiaan yang nggak ada habisnya. Dan izinkan aku jadi salah satu alasan bahagiamu. Selamat ulang tahun, cinta. Mari kita sama-sama tumbuh, saling melengkapi, dan terus menjaga rasa ini! APAPUN ITU TERUS SAMA AKU YAAA, I LOVE YOU MORE SAYANGKUUU... 🎉🎂";
+
+            // Isi area ucapan dengan pesan dan div foto kosong
+            var ucapanHTML = `<p id="pesan">${pesan}</p>
+            <div class="fotorow" id="fotorow"></div>`;
+            document.getElementById("ucapanArea").innerHTML = ucapanHTML;
+
+            // Daftar foto (ganti src sesuai kebutuhan)
+            var fotoList = [
+                "foto1.jpg",
+                "foto3.jpg",
+                "foto2.jpg"
+            ];
+
+            // Tampilkan foto satu per satu dengan efek bayangan masuk
+            var fotorow = document.getElementById("fotorow");
+            fotoList.forEach((src, i) => {
+                setTimeout(() => {
+                    var img = document.createElement("img");
+                    img.src = src;
+                    img.alt = "Foto " + (i+1);
+                    img.className = "bayangan-masuk";
+                    fotorow.appendChild(img);
+                    setTimeout(() => {
+                        img.classList.add("show");
+                    }, 50); // sedikit delay agar transisi berjalan
+                }, i * 850); // jeda per foto: 850ms
+            });
+
+            // Play musik
+            var musik = document.getElementById("musik");
+            musik.currentTime = 0;
+            musik.play();
+
+            // Animasi bunga lebih banyak (50 bunga)
+            for (let i = 0; i < 20000; i++) {
+                setTimeout(() => {
+                    buatBunga();
+                }, i * 80); // interval lebih cepat agar lebih ramai
+            }
+        }
+
+        function buatBunga() {
+            // Gambar bunga SVG
+            var bungaSVG = encodeURIComponent(`<svg width="40" height="40" viewBox="0 0 40 40"><circle cx="20" cy="20" r="8" fill="#ff69b4"/><ellipse cx="10" cy="10" rx="8" ry="4" fill="#ffe4e1"/><ellipse cx="30" cy="10" rx="8" ry="4" fill="#ffe4e1"/><ellipse cx="10" cy="30" rx="8" ry="4" fill="#ffe4e1"/><ellipse cx="30" cy="30" rx="8" ry="4" fill="#ffe4e1"/></svg>`);
+            var bunga = document.createElement("img");
+            bunga.src = "pink-love-heart-png-hd-pink-heart-png-pic-3000-1024x1024.png"; + bungaSVG;
+            bunga.className = "bunga";
+            bunga.style.left = Math.random() * (window.innerWidth - 40) + "px";
+            bunga.style.top = "-40px";
+            bunga.style.opacity = Math.random() * 0.5 + 0.5;
+
+            document.body.appendChild(bunga);
+
+            bunga.addEventListener("animationend", function() {
+                bunga.parentNode.removeChild(bunga);
+            });
+        }
+    </script>
+</body>
+</html>
